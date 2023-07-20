@@ -35,7 +35,7 @@ export default function Main() {
     new Date().getHours() + ":" + new Date().getMinutes()
   );
   const onChangeEnd = (event, selectedEvent) => {
-    const currentDate = endDate;
+    const currentDate = selectedEvent || endDate;
     setEndDate(currentDate);
     let tempDate = new Date(currentDate);
     let ftime = tempDate.getHours() + ":" + tempDate.getMinutes();
