@@ -88,9 +88,9 @@ export default function Main() {
       { text: enteredTaskText, image: image, time: text, endtime: endText },
     ]);
     setEnteredTaskText("");
-    setText(new Date().getHours() + ":" + new Date().getMinutes());
-    setEndText(new Date().getHours() + ":" + new Date().getMinutes());
     endAddTaskHandler();
+    setDate(new Date());
+    setEndDate(new Date());
   }
   function taskInputHandler(enteredText) {
     setEnteredTaskText(enteredText);
