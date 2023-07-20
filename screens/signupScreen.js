@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,47 +7,100 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
 } from "react-native";
+import Login from "./loginScreen";
+import Main from "./main";
 
 export default function Signup() {
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
+  const inputRef3 = useRef(null);
+
+  const handleNextPressOne = () => {
+    inputRef2.current.focus(); // Move focus to the next TextInput
+  };
+
+  const handleNextPresstwo = () => {
+    inputRef3.current.focus();
+  };
+
+  const handleDonePress = () => {
+    Keyboard.dismiss(); // Close the keyboard
+  };
+
+  const [showMain, setShowMain] = useState(false);
+  const handleMain = () => {
+    setShowMain(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>HabiSun</Text>
-      <View style={styles.loginContainer}>
-        <TextInput style={styles.user} placeholder="User" />
-        <TextInput style={styles.password} placeholder="Password" />
-        <TextInput style={styles.rePassword} placeholder="Re-type Password" />
-        <TouchableOpacity>
-          <View style={styles.loginButton}>
-            <Text>Sign Up</Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 328,
-            width: 236,
-            height: 32,
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 22,
-          }}
-        >
-          <Text style={styles.signupText}>Already have an account? </Text>
-          <TouchableOpacity>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 14,
-                textDecorationLine: "underline",
-                fontWeight: "700",
-              }}
-            >
-              Login Here
-            </Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Text style={styles.title}>HabiSun</Text>
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.user}
+            placeholder="User"
+            ref={inputRef1}
+            returnKeyType="next"
+            onSubmitEditing={handleNextPressOne}
+          />
+          <TextInput
+            style={styles.password}
+            placeholder="Password"
+            ref={inputRef2}
+            returnKeyType="next"
+            onSubmitEditing={handleNextPresstwo}
+          />
+          <TextInput
+            style={styles.rePassword}
+            placeholder="Re-type Password"
+            ref={inputRef3}
+            returnKeyType="done"
+            onSubmitEditing={handleDonePress}
+          />
+          <TouchableOpacity onPress={handleMain}>
+            <View style={styles.loginButton}>
+              <Text>Sign Up</Text>
+            </View>
           </TouchableOpacity>
+          {showMain && (
+            <Modal>
+              <Main />
+            </Modal>
+          )}
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 328,
+              width: 236,
+              height: 32,
+              justifyContent: "center",
+              alignItems: "center",
+              marginHorizontal: 22,
+            }}
+          >
+            <Text style={styles.signupText}>Already have an account? </Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  textDecorationLine: "underline",
+                  fontWeight: "700",
+                }}
+              >
+                Login Here
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -70,6 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 54,
     fontWeight: 700,
     marginBottom: 324,
+    textAlign: "center",
   },
   loginContainer: {
     width: 278,

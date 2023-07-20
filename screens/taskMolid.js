@@ -6,6 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import colors from "../colorPalette";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -13,8 +15,11 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 export default function Task(props) {
   //time picker display
   const [show, setShow] = useState(true);
+  const handleDonePress = () => {
+    Keyboard.dismiss(); // Close the keyboard
+  };
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.box}>
         <View style={styles.title}>
           <Image source={require("../assets/task.png")} />
@@ -25,6 +30,8 @@ export default function Task(props) {
           placeholder="Name your task"
           onChangeText={props.onChange}
           value={props.value}
+          returnKeyType="done"
+          onSubmitEditing={handleDonePress}
         ></TextInput>
         <View style={styles.timeBox}>
           <View>
@@ -83,7 +90,7 @@ export default function Task(props) {
           <Image source={require("../assets/x.png")} />
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

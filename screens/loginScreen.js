@@ -1,53 +1,106 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Button,
+  Keyboard,
+  Modal,
   SafeAreaView,
 } from "react-native";
 
 import Main from "./main";
+import SignUp from "./signupScreen";
 
 export default function Login() {
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
+
+  const handleNextPress = () => {
+    inputRef2.current.focus(); // Move focus to the next TextInput
+  };
+
+  const handleDonePress = () => {
+    Keyboard.dismiss(); // Close the keyboard
+  };
+
+  const [showMain, setShowMain] = useState(false);
+  const handleLogin = () => {
+    setShowMain(true);
+  };
+
+  const [showSignUp, setShowSignUp] = useState(false);
+  const handleSignUp = () => {
+    setShowSignUp(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>HabiSun</Text>
-      <View style={styles.loginContainer}>
-        <TextInput style={styles.user} placeholder="User" />
-        <TextInput style={styles.password} placeholder="Password" />
-        <TouchableOpacity>
-          <View style={styles.loginButton}>
-            <Text>Login</Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 260,
-            width: 236,
-            height: 32,
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 22,
-          }}
-        >
-          <Text style={styles.signupText}>Don't have an account? </Text>
-          <TouchableOpacity>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 14,
-                textDecorationLine: "underline",
-                fontWeight: "700",
-              }}
-            >
-              Sign Up Here
-            </Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Text style={styles.title}>HabiSun</Text>
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.user}
+            placeholder="User"
+            ref={inputRef1}
+            returnKeyType="next"
+            onSubmitEditing={handleNextPress}
+          />
+          <TextInput
+            style={styles.password}
+            placeholder="Password"
+            ref={inputRef2}
+            returnKeyType="done"
+            onSubmitEditing={handleDonePress}
+          />
+          <TouchableOpacity onPress={handleLogin}>
+            <View style={styles.loginButton}>
+              <Text>Login</Text>
+            </View>
           </TouchableOpacity>
+          {showMain && (
+            <Modal>
+              <Main />
+            </Modal>
+          )}
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 260,
+              width: 236,
+              height: 32,
+              justifyContent: "center",
+              alignItems: "center",
+              marginHorizontal: 22,
+            }}
+          >
+            <Text style={styles.signupText}>Don't have an account? </Text>
+            <TouchableOpacity onPress={handleSignUp}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  textDecorationLine: "underline",
+                  fontWeight: "700",
+                }}
+              >
+                Sign Up Here
+              </Text>
+              {showSignUp && (
+                <Modal>
+                  <SignUp />
+                </Modal>
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -71,6 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 54,
     fontWeight: 700,
     marginBottom: 392,
+    textAlign: "center",
   },
   loginContainer: {
     width: 278,

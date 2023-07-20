@@ -7,10 +7,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Habit(props) {
+  const handleDonePress = () => {
+    Keyboard.dismiss(); // Close the keyboard
+  };
   const [show, setShow] = useState(true);
   const [buttonColorM, setButtonColorM] = useState("#F2F2F2");
 
@@ -62,6 +67,8 @@ export default function Habit(props) {
           <Text style={styles.titleText}>Add a Habit</Text>
         </View>
         <TextInput
+          returnKeyType="done"
+          onSubmitEditing={handleDonePress}
           style={styles.inputBox}
           placeholder="Name your habit"
           onChangeText={props.onChange}

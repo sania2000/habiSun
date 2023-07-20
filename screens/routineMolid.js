@@ -7,13 +7,17 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Routine(props) {
   const [show, setShow] = useState(true);
   const [buttonColorM, setButtonColorM] = useState("#F2F2F2");
-
+  const handleDonePress = () => {
+    Keyboard.dismiss(); // Close the keyboard
+  };
   const changeButtonColorM = () => {
     const newColor = buttonColorM === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
     setButtonColorM(newColor);
@@ -66,6 +70,8 @@ export default function Routine(props) {
           placeholder="Name your routine"
           onChangeText={props.onChange}
           value={props.value}
+          returnKeyType="done"
+          onSubmitEditing={handleDonePress}
         ></TextInput>
         <View style={styles.timeBox}>
           <View>
