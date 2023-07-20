@@ -70,7 +70,7 @@ export default function Signup() {
             </View>
           </TouchableOpacity>
           {showMain && (
-            <Modal>
+            <Modal animationType="slide" transparent>
               <Main />
             </Modal>
           )}

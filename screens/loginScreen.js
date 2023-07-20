@@ -65,7 +65,7 @@ export default function Login() {
             </View>
           </TouchableOpacity>
           {showMain && (
-            <Modal>
+            <Modal animationType="slide" transparent>
               <Main />
             </Modal>
           )}
@@ -93,7 +93,7 @@ export default function Login() {
                 Sign Up Here
               </Text>
               {showSignUp && (
-                <Modal>
+                <Modal animationType="fade" transparent>
                   <SignUp />
                 </Modal>
               )}
