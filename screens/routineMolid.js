@@ -7,7 +7,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";

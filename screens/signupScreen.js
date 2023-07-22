@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
 import {
   StyleSheet,
@@ -11,16 +10,16 @@ import {
   KeyboardAvoidingView,
   Modal,
 } from "react-native";
-import Login from "./loginScreen";
 import Main from "./main";
+import colors from "../colorPalette";
 
-export default function Signup() {
+export default function Signup(props) {
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
 
   const handleNextPressOne = () => {
-    inputRef2.current.focus(); // Move focus to the next TextInput
+    inputRef2.current.focus();
   };
 
   const handleNextPresstwo = () => {
@@ -28,7 +27,7 @@ export default function Signup() {
   };
 
   const handleDonePress = () => {
-    Keyboard.dismiss(); // Close the keyboard
+    Keyboard.dismiss();
   };
 
   const [showMain, setShowMain] = useState(false);
@@ -56,6 +55,7 @@ export default function Signup() {
             ref={inputRef2}
             returnKeyType="next"
             onSubmitEditing={handleNextPresstwo}
+            secureTextEntry
           />
           <TextInput
             style={styles.rePassword}
@@ -63,9 +63,10 @@ export default function Signup() {
             ref={inputRef3}
             returnKeyType="done"
             onSubmitEditing={handleDonePress}
+            secureTextEntry
           />
           <TouchableOpacity onPress={handleMain}>
-            <View style={styles.loginButton}>
+            <View style={styles.signUpButton}>
               <Text>Sign Up</Text>
             </View>
           </TouchableOpacity>
@@ -74,29 +75,10 @@ export default function Signup() {
               <Main />
             </Modal>
           )}
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 328,
-              width: 236,
-              height: 32,
-              justifyContent: "center",
-              alignItems: "center",
-              marginHorizontal: 22,
-            }}
-          >
+          <View style={styles.subContainer}>
             <Text style={styles.signupText}>Already have an account? </Text>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textDecorationLine: "underline",
-                  fontWeight: "700",
-                }}
-              >
-                Login Here
-              </Text>
+            <TouchableOpacity onPress={props.login}>
+              <Text style={styles.loginButton}>Login Here</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -108,7 +90,7 @@ export default function Signup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#041425",
+    backgroundColor: colors.background,
     width: "100%",
     height: "100%",
     paddingTop: 124,
@@ -120,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    color: "#E9D2F4",
+    color: colors.accent,
     fontSize: 54,
     fontWeight: 700,
     marginBottom: 324,
@@ -166,23 +148,38 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
   },
-  loginButton: {
+  signUpButton: {
     width: 278,
     height: 52,
     position: "absolute",
-    backgroundColor: "#E9D2F4",
+    backgroundColor: colors.accent,
     borderRadius: 30,
     marginTop: 252,
     justifyContent: "center",
     alignItems: "center",
   },
   login: {
-    color: "#041425",
+    color: colors.background,
     fontSize: 14,
   },
   signupText: {
     color: "#D9D9D9",
     fontSize: 14,
     fontWeight: "500",
+  },
+  subContainer: {
+    flexDirection: "row",
+    marginTop: 328,
+    width: 236,
+    height: 32,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 22,
+  },
+  loginButton: {
+    color: colors.white,
+    fontSize: 14,
+    textDecorationLine: "underline",
+    fontWeight: "700",
   },
 });

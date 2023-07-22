@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState } from "react";
 import {
   StyleSheet,
@@ -7,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Button,
   Keyboard,
   Modal,
   SafeAreaView,
@@ -15,17 +13,18 @@ import {
 
 import Main from "./main";
 import SignUp from "./signupScreen";
+import colors from "../colorPalette";
 
 export default function Login() {
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
 
   const handleNextPress = () => {
-    inputRef2.current.focus(); // Move focus to the next TextInput
+    inputRef2.current.focus();
   };
 
   const handleDonePress = () => {
-    Keyboard.dismiss(); // Close the keyboard
+    Keyboard.dismiss();
   };
 
   const [showMain, setShowMain] = useState(false);
@@ -35,7 +34,7 @@ export default function Login() {
 
   const [showSignUp, setShowSignUp] = useState(false);
   const handleSignUp = () => {
-    setShowSignUp(true);
+    setShowSignUp(!showSignUp);
   };
 
   return (
@@ -69,32 +68,13 @@ export default function Login() {
               <Main />
             </Modal>
           )}
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 260,
-              width: 236,
-              height: 32,
-              justifyContent: "center",
-              alignItems: "center",
-              marginHorizontal: 22,
-            }}
-          >
+          <View style={styles.subContainer}>
             <Text style={styles.signupText}>Don't have an account? </Text>
             <TouchableOpacity onPress={handleSignUp}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textDecorationLine: "underline",
-                  fontWeight: "700",
-                }}
-              >
-                Sign Up Here
-              </Text>
+              <Text style={styles.signup}>Sign Up Here</Text>
               {showSignUp && (
                 <Modal animationType="fade" transparent>
-                  <SignUp />
+                  <SignUp login={handleSignUp} />
                 </Modal>
               )}
             </TouchableOpacity>
@@ -108,7 +88,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#041425",
+    backgroundColor: colors.background,
     width: "100%",
     height: "100%",
     paddingTop: 124,
@@ -120,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    color: "#E9D2F4",
+    color: colors.accent,
     fontSize: 54,
     fontWeight: 700,
     marginBottom: 392,
@@ -159,19 +139,34 @@ const styles = StyleSheet.create({
     width: 278,
     height: 52,
     position: "absolute",
-    backgroundColor: "#E9D2F4",
+    backgroundColor: colors.accent,
     borderRadius: 30,
     marginTop: 184,
     justifyContent: "center",
     alignItems: "center",
   },
   login: {
-    color: "#041425",
+    color: colors.background,
     fontSize: 14,
   },
   signupText: {
     color: "#D9D9D9",
     fontSize: 14,
     fontWeight: "500",
+  },
+  subContainer: {
+    flexDirection: "row",
+    marginTop: 260,
+    width: 236,
+    height: 32,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 22,
+  },
+  signup: {
+    color: colors.white,
+    fontSize: 14,
+    textDecorationLine: "underline",
+    fontWeight: "700",
   },
 });

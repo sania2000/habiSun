@@ -7,10 +7,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import colors from "../colorPalette";
 
 export default function Habit(props) {
   const handleDonePress = () => {
@@ -20,43 +20,43 @@ export default function Habit(props) {
   const [buttonColorM, setButtonColorM] = useState("#F2F2F2");
 
   const changeButtonColorM = () => {
-    const newColor = buttonColorM === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorM === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorM(newColor);
   };
   const [buttonColorT, setButtonColorT] = useState("#F2F2F2");
 
   const changeButtonColorT = () => {
-    const newColor = buttonColorT === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorT === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorT(newColor);
   };
   const [buttonColorW, setButtonColorW] = useState("#F2F2F2");
 
   const changeButtonColorW = () => {
-    const newColor = buttonColorW === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorW === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorW(newColor);
   };
   const [buttonColorTh, setButtonColorTh] = useState("#F2F2F2");
 
   const changeButtonColorTh = () => {
-    const newColor = buttonColorTh === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorTh === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorTh(newColor);
   };
   const [buttonColorF, setButtonColorF] = useState("#F2F2F2");
 
   const changeButtonColorF = () => {
-    const newColor = buttonColorF === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorF === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorF(newColor);
   };
   const [buttonColorS, setButtonColorS] = useState("#F2F2F2");
 
   const changeButtonColorS = () => {
-    const newColor = buttonColorS === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColorS === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColorS(newColor);
   };
   const [buttonColor, setButtonColor] = useState("#F2F2F2");
 
   const changeButtonColor = () => {
-    const newColor = buttonColor === "#F2F2F2" ? "#E9D2F4" : "#F2F2F2";
+    const newColor = buttonColor === "#F2F2F2" ? colors.accent : "#F2F2F2";
     setButtonColor(newColor);
   };
   return (
@@ -80,11 +80,7 @@ export default function Habit(props) {
           </View>
           {show && (
             <DateTimePicker
-              style={{
-                position: "absolute",
-                left: 57,
-                top: 36,
-              }}
+              style={styles.startTimePicker}
               testID="dateTimePicker"
               value={props.cdate}
               mode="time"
@@ -98,11 +94,7 @@ export default function Habit(props) {
           </View>
           {show && (
             <DateTimePicker
-              style={{
-                position: "absolute",
-                left: 285,
-                top: 36,
-              }}
+              style={styles.endTimePicker}
               testID="dateTimePicker"
               value={props.ecdate}
               mode="time"
@@ -158,16 +150,7 @@ export default function Habit(props) {
         <TouchableOpacity style={styles.addButton} onPress={props.onPress}>
           <Text style={styles.buttonText}>Add Habit</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 50,
-            width: 50,
-            position: "absolute",
-            top: 18,
-            left: 18,
-          }}
-          onPress={props.cancel}
-        >
+        <TouchableOpacity style={styles.closeButton} onPress={props.cancel}>
           <Image source={require("../assets/x.png")} />
         </TouchableOpacity>
       </View>
@@ -186,7 +169,7 @@ const styles = StyleSheet.create({
     height: 706,
     width: "100%",
     borderRadius: 20,
-    backgroundColor: "#FFC857",
+    backgroundColor: colors.habit,
     alignItems: "center",
   },
   title: {
@@ -199,7 +182,7 @@ const styles = StyleSheet.create({
   titleText: {
     top: 4,
     textAlign: "center",
-    color: "#041425",
+    color: colors.background,
     fontSize: 18,
     left: 8,
     fontWeight: "700",
@@ -224,7 +207,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    color: "#041425",
+    color: colors.background,
     textAlign: "center",
     fontWeight: "700",
     width: 72,
@@ -232,7 +215,7 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 14,
-    color: "#041425",
+    color: colors.background,
     fontWeight: "500",
     width: 72,
     height: 40,
@@ -261,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   dayText: {
-    color: "#041425",
+    color: colors.background,
     fontSize: 14,
     fontWeight: "700",
     textAlign: "center",
@@ -269,7 +252,7 @@ const styles = StyleSheet.create({
   addButton: {
     height: 52,
     width: 300,
-    backgroundColor: "#E9D2F4",
+    backgroundColor: colors.accent,
     position: "absolute",
     top: 580,
     justifyContent: "center",
@@ -277,9 +260,26 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   buttonText: {
-    color: "#041425",
+    color: colors.background,
     fontSize: 14,
     fontWeight: "400",
     letterSpacing: 0.28,
+  },
+  startTimePicker: {
+    position: "absolute",
+    left: 57,
+    top: 36,
+  },
+  endTimePicker: {
+    position: "absolute",
+    left: 285,
+    top: 36,
+  },
+  closeButton: {
+    height: 50,
+    width: 50,
+    position: "absolute",
+    top: 18,
+    left: 18,
   },
 });
